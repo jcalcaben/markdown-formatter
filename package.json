@@ -2,6 +2,7 @@
   "name": "devdocs-markdown-formatter",
   "version": "1.0.0",
   "main": "index.js",
+  "bin": "index.js",
   "license": "MIT",
   "dependencies": {
     "remark": "^11.0.0",
