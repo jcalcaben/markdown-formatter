@@ -1,13 +1,12 @@
 const rules = require('./rules');
 const jekyllLinkTokenizers = require('./tokenizers').jekyllLink;
-const {shortcutLinkFixer, listItemFixer} = require('./visitors')
+const {shortcutLinkFixer, listItemFixer} = require('./visitors');
 
 const remark = require('remark');
 
 const toVfile = require('to-vfile');
 
 const path = require('path');
-
 
 const processFile = file => {
   //console.log(String(file));
@@ -26,7 +25,7 @@ const processFile = file => {
     .use(shortcutLinkFixer)
     .use(listItemFixer)
     .process(file, (error, fileContent) => {
-//      console.log(error);
+      //      console.log(error);
       toVfile.writeSync(fileContent);
     });
 };
@@ -38,6 +37,8 @@ module.exports = () => {
 
   //console.log(pathInfo);
 
+  console.log('Attempting to fix: ' + args[0]);
+
   if (pathInfo.ext != '.md') {
     console.error('File must be a markdown file');
     return;
@@ -46,6 +47,9 @@ module.exports = () => {
   toVfile
     .read(args[0])
     .then(processFile)
+    .then(() => {
+      console.log('Done');
+    })
     .catch(error => {
       console.error(error);
     });
